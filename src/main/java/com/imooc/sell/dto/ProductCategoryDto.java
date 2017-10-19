@@ -1,5 +1,7 @@
 package com.imooc.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -15,8 +17,10 @@ public class ProductCategoryDto implements Serializable {
     /** 类目编号 **/
     private Integer categoryId;
     /** 类目名称 **/
+    @JsonProperty("name")
     private String categoryName;
     /** 类目编号 **/
+    @JsonProperty("type")
     private String categoryType;
     /** 创建时间 **/
     private Timestamp createTime;

@@ -7,8 +7,13 @@ import com.imooc.sell.repository.ProductCategoryRepository;
 import com.imooc.sell.service.ProductCategoryCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Description 商品类目表操作数据库服务实现
  * @Author Carey
@@ -43,7 +48,7 @@ public class ProductCategoryCrudServiceImpl implements ProductCategoryCrudServic
     public void updateProductCategoryById(ProductCategoryDto productCategoryDto) {
         LOGGER.info("*****修改商品类目,类目ID={}****",productCategoryDto.getCategoryId());
         ProductCategory productCategory  = productCategoryRepository.findOne(productCategoryDto.getCategoryId());
-        productCategory = beanConverter.convert(productCategoryDto,ProductCategory.class);
+        BeanUtils.copyProperties(productCategoryDto,productCategory);
         productCategoryRepository.save(productCategory);
     }
 
@@ -53,5 +58,14 @@ public class ProductCategoryCrudServiceImpl implements ProductCategoryCrudServic
         ProductCategory productCategory  = productCategoryRepository.findOne(productCategoryDto.getCategoryId());
         ProductCategoryDto queryResult = beanConverter.convert(productCategory,ProductCategoryDto.class);
         return queryResult;
+    }
+
+    @Override
+    public List<ProductCategoryDto> queryAllProduct() {
+        LOGGER.info("****查询所有类目****");
+        List<ProductCategory> productCategoryList =  productCategoryRepository.findAll();
+        List<ProductCategoryDto> productCategoryDtoList = new ArrayList<ProductCategoryDto>();
+        BeanUtils.copyProperties(productCategoryList,productCategoryDtoList);
+        return productCategoryDtoList;
     }
 }

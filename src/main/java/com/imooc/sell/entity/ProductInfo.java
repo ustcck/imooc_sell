@@ -13,7 +13,6 @@ public class ProductInfo {
 
     /**商品ID**/
     @Id
-    @GeneratedValue
     private String productId;
     /**商品名称**/
     private String productName;
